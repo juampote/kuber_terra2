@@ -52,10 +52,14 @@ jobs:
             #gcloud init
             #echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             #gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            #gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}      
+            #gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
+      - run:
+         name: Start Google SDK
+         command: |
+           gcloud init      
       - run:
           name: Deploy Code
-          command: sh ./.circleci/scripts/ci-deply.sh
+          command: sh ./.circleci/scripts/ci-deploy.sh
 workflows:
   version: 2
   build-master:
