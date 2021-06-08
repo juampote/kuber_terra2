@@ -49,6 +49,8 @@ jobs:
             tar xvzf ./google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
             cd ./google-cloud-sdk
             /bin/bash ./install.sh --quiet
+            exec -l $SHELL
+            gcloud init
             echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}      
