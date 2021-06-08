@@ -15,7 +15,7 @@ jobs:
       - gcp-cli/install
   build:
     docker:
-      - image: circleci/buildpack-deps:stretch
+      - image: google/cloud-sdk
     environment:
       IMAGE_NAME: jparrauguina/hola-docker
     working_directory: ~/app
@@ -42,17 +42,17 @@ jobs:
           command: |
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
             chmod u+x ./kubectl
-      - run:
-          name: Install Google SDK
-          command: |
-            curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
-            tar xvzf ./google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
-            cd ./google-cloud-sdk
-            /bin/bash ./install.sh --quiet
-            gcloud init
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}      
+      #- run:
+       #   name: Install Google SDK
+        #  command: |
+         #   curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
+          #  tar xvzf ./google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
+           # cd ./google-cloud-sdk
+            #/bin/bash ./install.sh --quiet
+            #gcloud init
+            #echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            #gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            #gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}      
       - run:
           name: Deploy Code
           command: sh ./.circleci/scripts/ci-deploy.sh
