@@ -1,5 +1,18 @@
+orbs:
+  gcp-cli: circleci/gcp-cli@2.2.0
 version: 2.1
 jobs:
+   # default executor
+  install-default:
+    executor: gcp-cli/default
+    steps:
+      - gcp-cli/install
+
+  # google cloud image
+  install-google:
+    executor: gcp-cli/google
+    steps:
+      - gcp-cli/install
   build:
     docker:
       - image: circleci/buildpack-deps:stretch
@@ -32,6 +45,8 @@ jobs:
       - run:
           name: Install Google SDK
           command: |
+            curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
+
             echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}      
