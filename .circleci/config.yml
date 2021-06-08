@@ -47,7 +47,7 @@ jobs:
           command: |
             curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
             tar xvzf ./google-cloud-sdk-343.0.0-linux-x86_64.tar.gz
-            cd ./google_cloud_sdk
+            cd ./google-cloud-sdk
             /bin/bash ./install.sh --quiet
             echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
