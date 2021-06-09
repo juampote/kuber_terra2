@@ -1,18 +1,5 @@
-orbs:
-  gcp-cli: circleci/gcp-cli@2.2.0
 version: 2.1
 jobs:
-   # default executor
-  install-default:
-    executor: gcp-cli/default
-    steps:
-      - gcp-cli/install
-
-  # google cloud image
-  install-google:
-    executor: gcp-cli/google
-    steps:
-      - gcp-cli/install
   build:
     docker:
       - image: google/cloud-sdk
@@ -56,7 +43,11 @@ jobs:
       - run:
          name: Start Google SDK
          command: |
-           gcloud init      
+           echo ${GCLOUD_SERVICE_KEY} > | /tmp/sa_key.json
+           gcloud auto activate-service-account --key-file=/tmp/sa_key.json
+           rm /tmp/sa_key.json
+           gcloud config set project ${GOOGLE_PROJECT_ID}
+           gcloud config set compute/region ${GOOGLE_COMPUTE_REGION}
       - run:
           name: Deploy Code
           command: sh ./.circleci/scripts/ci-deploy.sh
