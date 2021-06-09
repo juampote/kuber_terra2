@@ -43,6 +43,7 @@ jobs:
       - run:
          name: Start Google SDK
          command: |
+           gcloud iam service-accounts keys create gsa-key.json     --iam-account=circleci-svc@utopian-outlet-313415.iam.gserviceaccount.com
            gcloud auth activate-service-account circleci-svc@utopian-outlet-313415.iam.gserviceaccount.com --key-file=gsa-key.json
            gcloud config set project utopian-outlet-313415
            gcloud container clusters get-credentials pelado --zone=us-central1
