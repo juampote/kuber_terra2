@@ -43,6 +43,7 @@ jobs:
       - run:
          name: Start Google SDK
          command: |
+           echo ${GCLOUD_SERVICE_KEY}
            echo ${GCLOUD_SERVICE_KEY} > /tmp/sa_key.json
            gcloud auth activate-service-account --key-file=/tmp/sa_key.json
            rm /tmp/sa_key.json
