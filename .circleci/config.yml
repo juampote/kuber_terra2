@@ -43,12 +43,9 @@ jobs:
       - run:
          name: Start Google SDK
          command: |
-           echo ${GCLOUD_SERVICE_KEY}
-           echo ${GCLOUD_SERVICE_KEY} > /tmp/sa_key.json
-           gcloud auth activate-service-account --key-file=/tmp/sa_key.json
-           rm /tmp/sa_key.json
+           gcloud auth activate-service-account circleci-svc@utopian-outlet-313415.iam.gserviceaccount.com --key-file=gsa-key.json
            gcloud config set project utopian-outlet-313415
-           gcloud config set compute/region us-central1
+           gcloud container clusters get-credentials pelado --zone=us-central1
       - run:
           name: Deploy Code
           command: sh ./.circleci/scripts/ci-deploy.sh
