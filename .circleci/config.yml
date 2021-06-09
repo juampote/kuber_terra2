@@ -46,8 +46,8 @@ jobs:
            echo ${GCLOUD_SERVICE_KEY} > /tmp/sa_key.json
            gcloud auth activate-service-account --key-file=/tmp/sa_key.json
            rm /tmp/sa_key.json
-           gcloud config set project ${GOOGLE_PROJECT_ID}
-           gcloud config set compute/region ${GOOGLE_COMPUTE_REGION}
+           gcloud config set project utopian-outlet-313415
+           gcloud config set compute/region us-central1
       - run:
           name: Deploy Code
           command: sh ./.circleci/scripts/ci-deploy.sh
